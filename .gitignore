@@ -10,3 +10,4 @@ __pycache__/
 *.sqlite-wal
 *.sqlite-shm
 .influence-net-home/
+.npmrc.publish
