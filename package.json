@@ -19,6 +19,9 @@
         "@deepseek-ai/dsh-client-ui-sidebar-right"
       ],
       "platform": "web"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
     }
   },
   "scripts": {
@@ -26,5 +29,21 @@
     "test:plugin": "vitest run",
     "bundle:client": "node ./scripts/build-client.mjs",
     "engine": "./engine/run.sh"
-  }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jqlong17/influence-net.git"
+  },
+  "homepage": "https://influence.notta.uk",
+  "bugs": {
+    "url": "https://github.com/jqlong17/influence-net/issues"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "a-share",
+    "influence-net"
+  ]
 }
