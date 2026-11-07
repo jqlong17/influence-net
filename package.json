@@ -1,7 +1,7 @@
 {
   "name": "influence-net",
   "description": "影响网 — A-share influence analysis for DeepSeek Harness (dsh): local engine + sidebar canvas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "./src/index.ts",
   "exports": {
