@@ -31,7 +31,8 @@ flowchart LR
   U[你] --> DSH[DeepSeek Harness 对话]
   DSH --> P[影响网插件]
   P -->|右侧栏| C[关系网 / 雷达维画布]
-  P -->|propose / apply 等工具| E[本地引擎 :18765]
+  P --> MCP[MCP 工具<br/>propose / apply / …]
+  MCP -->|HTTP| E[本地引擎 :18765]
   E --> DB[(本机 SQLite<br/>~/.influence-net/)]
   EX[示例种子<br/>工业富联 601138] -.->|首次空库装入| DB
 ```
@@ -72,7 +73,27 @@ npm 包名：`influence-net`（可在 [DSH Plugin Hub](https://dshpluginhub.ai) 
 
 1. 打开会话右侧栏 → **影响网**
 2. 切换关系网 / 雷达维，点选节点查看详情
-3. 常用工具：`influence_net_propose`、`influence_net_apply`、`influence_net_create_net`、`influence_net_load_example`
+3. 对话里用下面的 MCP 工具读写影响网（不要让模型用 bash / sqlite 直写库）
+
+## MCP 工具
+
+插件通过 DeepSeek Harness 注册下列工具；写入一律走本地引擎，结构性改动默认先挂起、确认后再落库。
+
+| 工具 | 做什么 |
+| --- | --- |
+| `influence_net_status` | 检查插件是否加载、本地引擎是否可达 |
+| `influence_net_get_graph` | 读取当前网；`view=instance` 关系网，`view=abstract` 雷达维 |
+| `influence_net_list_nets` | 列出已有标的网与当前激活的 `net_id` |
+| `influence_net_create_net` | 按模版新建空白网（中心 + 八维空壳，不拷贝别的票） |
+| `influence_net_activate_net` | 切换当前激活的网 |
+| `influence_net_load_example` | 装入内置示例（默认工业富联 601138） |
+| `influence_net_propose` | 用自然语言提出改图；低风险叙述可自动写入，中高风险挂 pending |
+| `influence_net_pending` | 查看待确认的改动 |
+| `influence_net_apply` | 用户明确确认后，写入某条 pending |
+| `influence_net_reject` | 拒绝某条 pending，不写入 |
+| `influence_net_bulk_seed` | 批量装入节点/边结构；默认需确认，禁止编造 strength |
+
+约定简述：真源优先保留用户原话；`public` 归因至少要有可核验的发行人/主流媒体证据 URL，否则降为 `weak`；不要绕过工具直接改 SQLite。
 
 ## 示例数据
 
