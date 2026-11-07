@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { nextViewMode, viewToLabQuery, type ViewMode } from '../src/client/view-mode.ts'
-import { VIEW_RADAR, VIEW_RELATION } from '../src/client/labels.ts'
+import { nextViewMode, viewToLabQuery, type ViewMode } from '../../src/client/view-mode.ts'
+import { VIEW_RADAR, VIEW_RELATION } from '../../src/client/labels.ts'
 
 describe('view mode switch', () => {
   it('defaults to 关系网 and toggles to 雷达维', () => {

@@ -2,9 +2,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
 import { SidebarRightTabRegistry } from '../../packages/client/ui-sidebar-right/src/client/tab-registry.ts'
-import { apply, inject } from '../src/client/index.ts'
-import { GUIDE_TITLE, PLUGIN_ID, TAB_KIND, VIEW_RADAR, VIEW_RELATION } from '../src/client/labels.ts'
-import { InfluenceLabBody } from '../src/client/InfluenceLabBody.tsx'
+import { apply, inject } from '../../src/client/index.ts'
+import { GUIDE_TITLE, PLUGIN_ID, TAB_KIND, VIEW_RADAR, VIEW_RELATION } from '../../src/client/labels.ts'
+import { InfluenceLabBody } from '../../src/client/InfluenceLabBody.tsx'
 
 const contexts: Context[] = []
 

@@ -9,7 +9,12 @@ import {
   ENGINE_READ_PATHS,
 } from '../engine-paths.ts'
 
-export { ENGINE_ACTIVATE_PATH, ENGINE_READ_PATHS }
+export {
+  ENGINE_ACTIVATE_PATH,
+  ENGINE_READ_PATHS,
+  ENGINE_ACTIVATE_PATH as LAB_ACTIVATE_PATH,
+  ENGINE_READ_PATHS as LAB_READ_PATHS,
+}
 
 export type EngineBase = string
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { LAYOUT_PAD, RING_FRAC, layoutRadial, ringGeometry } from '../src/client/layout-radial.ts'
+import { LAYOUT_PAD, RING_FRAC, layoutRadial, ringGeometry } from '../../src/client/layout-radial.ts'
 
 describe('layoutRadial', () => {
   it('puts center at mid-box', () => {

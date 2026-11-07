@@ -5,7 +5,7 @@ import {
   VIEW_RELATION,
   VIEW_RADAR,
   USER_FACING_FORBIDDEN,
-} from '../src/client/labels.ts'
+} from '../../src/client/labels.ts'
 
 describe('influence-lab sidebar labels', () => {
   it('uses investor-facing view names 关系网 and 雷达维', () => {

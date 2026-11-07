@@ -2,8 +2,8 @@
 import { createRoot } from 'react-dom/client'
 import { act } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { InfluenceLabBody } from '../src/client/InfluenceLabBody.tsx'
-import { HORIZON_STROKE } from '../src/client/horizon-color.ts'
+import { InfluenceLabBody } from '../../src/client/InfluenceLabBody.tsx'
+import { HORIZON_STROKE } from '../../src/client/horizon-color.ts'
 
 function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {

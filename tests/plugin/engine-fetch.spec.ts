@@ -8,7 +8,7 @@ import {
   fetchStructure,
   LAB_ACTIVATE_PATH,
   LAB_READ_PATHS,
-} from '../src/client/engine-fetch.ts'
+} from '../../src/client/engine-fetch.ts'
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -84,11 +84,11 @@ describe('engine-fetch (panel API)', () => {
 
 describe('client sources have no MCP write / sqlite helpers', () => {
   it('client tree forbids sqlite and mcp apply/propose; POST only for activate', () => {
-    const root = join(import.meta.dirname, '../src/client')
+    const root = join(import.meta.dirname, '../../src/client')
     const files = readdirSync(root, { withFileTypes: true })
       .filter((d) => d.isFile())
       .map((d) => d.name)
-    const paths = readFileSync(join(import.meta.dirname, '../src/engine-paths.ts'), 'utf8')
+    const paths = readFileSync(join(import.meta.dirname, '../../src/engine-paths.ts'), 'utf8')
     const blob = files.map((f) => readFileSync(join(root, f), 'utf8')).join('\n') + '\n' + paths
     expect(blob).not.toMatch(/sqlite3?\b/i)
     expect(blob).not.toMatch(/\/api\/mcp\/(apply|propose|bulk_seed|reject)/)
@@ -96,6 +96,6 @@ describe('client sources have no MCP write / sqlite helpers', () => {
     const postHits = blob.match(/method:\s*['"]POST['"]/g) || []
     expect(postHits.length).toBe(1)
     expect(paths).toMatch(/\/api\/nets\/activate/)
-    expect(blob).toMatch(/LAB_ACTIVATE_PATH/)
+    expect(blob).toMatch(/LAB_ACTIVATE_PATH|ENGINE_ACTIVATE_PATH/)
   })
 })

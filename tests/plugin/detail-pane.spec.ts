@@ -20,7 +20,7 @@ import {
   MIN_DETAIL_WIDTH,
   readStoredDetailWidth,
   truncateSnippet,
-} from '../src/client/DetailPane.tsx'
+} from '../../src/client/DetailPane.tsx'
 
 describe('buildGenericDetailRows', () => {
   it('puts core identity first then all remaining props', () => {

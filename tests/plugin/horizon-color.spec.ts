@@ -5,7 +5,7 @@ import {
   horizonFill,
   horizonStroke,
   primaryHorizon,
-} from '../src/client/horizon-color.ts'
+} from '../../src/client/horizon-color.ts'
 
 describe('primaryHorizon', () => {
   it('prefers near over mid/long', () => {

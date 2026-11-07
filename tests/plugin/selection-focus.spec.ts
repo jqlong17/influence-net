@@ -4,7 +4,7 @@ import {
   edgeDisplayName,
   selectionFocus,
   truncateEdgeLabel,
-} from '../src/client/selection-focus.ts'
+} from '../../src/client/selection-focus.ts'
 
 describe('edgeDisplayName', () => {
   it('prefers name, then label, then props.channel, then narrative, then rel', () => {
