@@ -26,13 +26,17 @@
 
 ## 架构
 
-```
-DeepSeek Harness（dsh）插件 (src/)  --HTTP-->  本地引擎 (engine/)  --SQLite-->  ~/.influence-net/nets/<net_id>/
-                                                 ↑
-                                        data/examples/fii-601138/
+```mermaid
+flowchart LR
+  U[你] --> DSH[DeepSeek Harness 对话]
+  DSH --> P[影响网插件]
+  P -->|右侧栏| C[关系网 / 雷达维画布]
+  P -->|propose / apply 等工具| E[本地引擎 :18765]
+  E --> DB[(本机 SQLite<br/>~/.influence-net/)]
+  EX[示例种子<br/>工业富联 601138] -.->|首次空库装入| DB
 ```
 
-默认引擎地址：`http://127.0.0.1:18765`（可用 `INFLUENCE_NET_URL` / `INFLUENCE_NET_HOME` 覆盖）。
+数据留在本机；对话只负责提出改动，确认后再写入。默认引擎地址：`http://127.0.0.1:18765`（可用 `INFLUENCE_NET_URL` / `INFLUENCE_NET_HOME` 覆盖）。
 
 ## 前置
 
