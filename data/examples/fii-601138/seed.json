@@ -1,0 +1,1292 @@
+{
+  "demo": true,
+  "demo_disclaimer": "示例数据，仅供产品演示。非投资建议；节点叙述多为公开材料归纳与弱推断，请自行核实。",
+  "product": "influence-net",
+  "schema_version": "influence-net.structure.1",
+  "net_id": "net_fii_601138",
+  "title": "工业富联影响网络（雷达维 × 近中远）",
+  "purpose": "讨论601138时在本网络上定位变化、扩展节点与关系；中心为公司对象，维度为雷达轴，horizon为时间层。",
+  "asof": "2026-11-07",
+  "timezone": "Asia/Shanghai",
+  "center": {
+    "id": "fii_601138",
+    "type": "Company",
+    "name": "工业富联",
+    "ticker": "601138.SH",
+    "role": "AI服务器/机柜 ODM·JDM（全球CSP算力基建制造履约方）"
+  },
+  "dimensions": [
+    {
+      "id": "dim_upstream",
+      "name": "上游与成本",
+      "desc": "原材料、关键件、供给与成本传导"
+    },
+    {
+      "id": "dim_csp",
+      "name": "客户与需求",
+      "desc": "下游客户、订单与需求景气"
+    },
+    {
+      "id": "dim_peers",
+      "name": "同业竞争",
+      "desc": "对手份额、报价与替代"
+    },
+    {
+      "id": "dim_capacity",
+      "name": "产能与地理",
+      "desc": "基地、产能、运力与区位"
+    },
+    {
+      "id": "dim_product",
+      "name": "产品与技术",
+      "desc": "产品线、技术路线与工程交付"
+    },
+    {
+      "id": "dim_finance",
+      "name": "财务与资本",
+      "desc": "报表质量、现金流与资本运作"
+    },
+    {
+      "id": "dim_policy",
+      "name": "政策与地缘",
+      "desc": "监管、政策与地缘约束"
+    },
+    {
+      "id": "dim_narrative",
+      "name": "叙事与预期",
+      "desc": "市场叙事、预期与风险偏好"
+    }
+  ],
+  "horizons": {
+    "near": {
+      "name": "近期",
+      "window": "数周–约2个季度"
+    },
+    "mid": {
+      "name": "中期",
+      "window": "约0.5–2年"
+    },
+    "long": {
+      "name": "远期",
+      "window": "数年，弹性大"
+    }
+  },
+  "nodes": [
+    {
+      "id": "nvda",
+      "name": "英伟达",
+      "type": "Company",
+      "dimension": "dim_upstream",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "财报当季情绪快，机柜量传到FII常滞后数季",
+      "channel": "平台代际→整柜BOM与认证→出货量",
+      "strength": 0.9,
+      "note": "绑定深但非单轨；GPU毛利不流入ODM"
+    },
+    {
+      "id": "nvl72",
+      "name": "NVL72类整柜",
+      "type": "ProductPlatform",
+      "dimension": "dim_product",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "认证+爬坡跨多季",
+      "channel": "订单形态从服务器→整柜系统",
+      "strength": 0.85,
+      "note": "门槛与单票金额↑，非永续高毛利"
+    },
+    {
+      "id": "rubin",
+      "name": "Vera Rubin代际",
+      "type": "ProductPlatform",
+      "dimension": "dim_upstream",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "切换期可能空窗",
+      "channel": "下一代机柜量产资格与份额",
+      "strength": 0.8,
+      "note": "更深系统整合或压缩ODM设计差异化"
+    },
+    {
+      "id": "asic_csp",
+      "name": "CSP自研ASIC",
+      "type": "TechTrend",
+      "dimension": "dim_upstream",
+      "horizons": [
+        "mid",
+        "long"
+      ],
+      "lag": "结构慢变",
+      "channel": "稀释纯GPU叙事，FII双轨仍可接单",
+      "strength": 0.55,
+      "note": "谷歌TPU/亚马逊Trainium/微软等"
+    },
+    {
+      "id": "csp_capex",
+      "name": "北美CSP资本开支",
+      "type": "DemandDriver",
+      "dimension": "dim_csp",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "指引快，订单落地有滞",
+      "channel": "柜数×加工费的最硬需求函数",
+      "strength": 0.95,
+      "note": "砍CAPEX时订单立刻冷"
+    },
+    {
+      "id": "odm_direct",
+      "name": "ODM Direct",
+      "type": "BusinessModel",
+      "dimension": "dim_csp",
+      "horizons": [
+        "mid"
+      ],
+      "lag": "已是稳态结构",
+      "channel": "云厂绕过品牌商直连代工",
+      "strength": 0.7,
+      "note": "强化FII客户粘性，也强化议价压力"
+    },
+    {
+      "id": "quanta",
+      "name": "广达等台系ODM",
+      "type": "Competitor",
+      "dimension": "dim_peers",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "份额此消彼长",
+      "channel": "同代整柜认证与产能争夺",
+      "strength": 0.75,
+      "note": "纬颖/英业达等同梯队"
+    },
+    {
+      "id": "a_share_peers",
+      "name": "A股算力相关",
+      "type": "CompetitorSet",
+      "dimension": "dim_peers",
+      "horizons": [
+        "near"
+      ],
+      "lag": "情绪联动大于业务同构",
+      "channel": "交易叙事对照，非同池订单",
+      "strength": 0.25,
+      "note": "浪潮/曙光等国内整机信创，勿直接对标"
+    },
+    {
+      "id": "mexico",
+      "name": "墨西哥近岸",
+      "type": "Capacity",
+      "dimension": "dim_capacity",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "扩产与利用率滞后订单",
+      "channel": "北美交付时效与合规",
+      "strength": 0.8,
+      "note": "2025已成最大单一境外制造基地"
+    },
+    {
+      "id": "vietnam",
+      "name": "越南产能",
+      "type": "Capacity",
+      "dimension": "dim_capacity",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "增速快于体量",
+      "channel": "海外制造第二引擎",
+      "strength": 0.55,
+      "note": "2025同比增速亮眼"
+    },
+    {
+      "id": "cn_mfg",
+      "name": "中国大陆制造底座",
+      "type": "Capacity",
+      "dimension": "dim_capacity",
+      "horizons": [
+        "near",
+        "mid",
+        "long"
+      ],
+      "lag": "体量大、弹性稳",
+      "channel": "仍是最大制造地（按生产地口径）",
+      "strength": 0.7,
+      "note": "≠国内终端销售占比"
+    },
+    {
+      "id": "liquid_cooling",
+      "name": "液冷与关键件垂直整合",
+      "type": "Capability",
+      "dimension": "dim_product",
+      "horizons": [
+        "mid"
+      ],
+      "lag": "随整柜渗透缓升",
+      "channel": "差异化与毛利边际",
+      "strength": 0.5,
+      "note": "半壁垒"
+    },
+    {
+      "id": "networking",
+      "name": "高速交换/NVLink配套",
+      "type": "ProductLine",
+      "dimension": "dim_product",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "常随机柜同涨",
+      "channel": "算力基建包加深绑定",
+      "strength": 0.65,
+      "note": "800G/1.6T、CPO等"
+    },
+    {
+      "id": "segment_mix",
+      "name": "云计算收入占比",
+      "type": "FinancialMetric",
+      "dimension": "dim_finance",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "季报披露",
+      "channel": "AI敞口深度的财报镜像",
+      "strength": 0.7,
+      "note": "2025云计算约占总营收2/3"
+    },
+    {
+      "id": "ocf_wc",
+      "name": "经营现金流与营运资本",
+      "type": "FinancialMetric",
+      "dimension": "dim_finance",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "滞后利润",
+      "channel": "增长是否失血",
+      "strength": 0.6,
+      "note": "应收存货膨胀是主观察点"
+    },
+    {
+      "id": "customer_conc",
+      "name": "前五大客户集中度",
+      "type": "FinancialMetric",
+      "dimension": "dim_finance",
+      "horizons": [
+        "mid",
+        "long"
+      ],
+      "lag": "年报级",
+      "channel": "议价与订单波动放大器",
+      "strength": 0.7,
+      "note": "2025约62%"
+    },
+    {
+      "id": "export_control",
+      "name": "对华高端GPU限制",
+      "type": "Policy",
+      "dimension": "dim_policy",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "对FII主盘冲击有限",
+      "channel": "伤国内供给生态，非墨越CSP主单",
+      "strength": 0.2,
+      "note": "勿过度映射到601138基本面"
+    },
+    {
+      "id": "geo_reshoring",
+      "name": "产能再布局/合规",
+      "type": "Policy",
+      "dimension": "dim_policy",
+      "horizons": [
+        "mid",
+        "long"
+      ],
+      "lag": "慢变量",
+      "channel": "近岸门槛与成本",
+      "strength": 0.45,
+      "note": "长期可抬进入壁垒"
+    },
+    {
+      "id": "space_compute",
+      "name": "太空算力叙事",
+      "type": "Narrative",
+      "dimension": "dim_narrative",
+      "horizons": [
+        "long"
+      ],
+      "lag": "近中期可忽略",
+      "channel": "情绪边角，非订单",
+      "strength": 0.05,
+      "note": "马斯克轨道算力等"
+    },
+    {
+      "id": "ai_capex_cycle",
+      "name": "AI资本开支长周期",
+      "type": "MacroCycle",
+      "dimension": "dim_csp",
+      "horizons": [
+        "long"
+      ],
+      "lag": "数年",
+      "channel": "训练狂奔→推理稳态的斜率",
+      "strength": 0.8,
+      "note": "远期主不确定性"
+    },
+    {
+      "id": "value_capture",
+      "name": "ODM价值捕获收缩风险",
+      "type": "StructuralRisk",
+      "dimension": "dim_product",
+      "horizons": [
+        "long"
+      ],
+      "lag": "随平台垂直整合缓现",
+      "channel": "系统级锁定上移→代工可吃价值变薄",
+      "strength": 0.5,
+      "note": "远期结构性风险"
+    },
+    {
+      "id": "itc_337",
+      "name": "美国ITC 337调查",
+      "type": "LegalRisk",
+      "dimension": "dim_policy",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "立案阶段，结果滞后数季到年",
+      "channel": "Vicor垂直供电专利指控；公司称对当前生产经营无实质影响",
+      "strength": 0.35,
+      "note": "2026-10-09 启动；涉及产品内部验证评估阶段"
+    },
+    {
+      "id": "esop_2026",
+      "name": "2026员工持股计划",
+      "type": "Governance",
+      "dimension": "dim_finance",
+      "horizons": [
+        "mid"
+      ],
+      "lag": "买入与解锁跨年",
+      "channel": "考核锚定2027–2029累计净利≥2400亿；绑定团队与长期利润预期",
+      "strength": 0.4,
+      "note": "草案资金上限20亿，二级市场购买"
+    },
+    {
+      "id": "us_midterms_ai",
+      "name": "美国中期选举/AI基建监管预期",
+      "type": "MacroEvent",
+      "dimension": "dim_narrative",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "lag": "情绪快，政策落地慢",
+      "channel": "数据中心建设/德州制造监管预期扰动AI硬件风险偏好",
+      "strength": 0.45,
+      "note": "2026-11 中期选举叙事；影响情绪多于当季订单"
+    },
+    {
+      "id": "nvda_earn_q3fy27",
+      "name": "英伟达FY27Q3财报窗口",
+      "type": "CalendarEvent",
+      "dimension": "dim_upstream",
+      "horizons": [
+        "near"
+      ],
+      "lag": "财报当日情绪快，机柜量滞后",
+      "channel": "指引/Rubin放量表述→ODM叙事与风险偏好",
+      "strength": 0.85,
+      "note": "预定约2026-11-17披露；Q2指引Q3营收约1080亿±2%"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e_nvda_to_center",
+      "source": "nvda",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_upstream",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.9,
+      "lag": "财报当季情绪快，机柜量传到FII常滞后数季",
+      "channel": "平台代际→整柜BOM与认证→出货量"
+    },
+    {
+      "id": "e_nvl72_to_center",
+      "source": "nvl72",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_product",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.85,
+      "lag": "认证+爬坡跨多季",
+      "channel": "订单形态从服务器→整柜系统"
+    },
+    {
+      "id": "e_rubin_to_center",
+      "source": "rubin",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_upstream",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.8,
+      "lag": "切换期可能空窗",
+      "channel": "下一代机柜量产资格与份额"
+    },
+    {
+      "id": "e_asic_csp_to_center",
+      "source": "asic_csp",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_upstream",
+      "horizons": [
+        "mid",
+        "long"
+      ],
+      "strength": 0.55,
+      "lag": "结构慢变",
+      "channel": "稀释纯GPU叙事，FII双轨仍可接单"
+    },
+    {
+      "id": "e_csp_capex_to_center",
+      "source": "csp_capex",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_csp",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.95,
+      "lag": "指引快，订单落地有滞",
+      "channel": "柜数×加工费的最硬需求函数"
+    },
+    {
+      "id": "e_odm_direct_to_center",
+      "source": "odm_direct",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_csp",
+      "horizons": [
+        "mid"
+      ],
+      "strength": 0.7,
+      "lag": "已是稳态结构",
+      "channel": "云厂绕过品牌商直连代工"
+    },
+    {
+      "id": "e_quanta_to_center",
+      "source": "quanta",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_peers",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.75,
+      "lag": "份额此消彼长",
+      "channel": "同代整柜认证与产能争夺"
+    },
+    {
+      "id": "e_a_share_peers_to_center",
+      "source": "a_share_peers",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_peers",
+      "horizons": [
+        "near"
+      ],
+      "strength": 0.25,
+      "lag": "情绪联动大于业务同构",
+      "channel": "交易叙事对照，非同池订单"
+    },
+    {
+      "id": "e_mexico_to_center",
+      "source": "mexico",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_capacity",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.8,
+      "lag": "扩产与利用率滞后订单",
+      "channel": "北美交付时效与合规"
+    },
+    {
+      "id": "e_vietnam_to_center",
+      "source": "vietnam",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_capacity",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.55,
+      "lag": "增速快于体量",
+      "channel": "海外制造第二引擎"
+    },
+    {
+      "id": "e_cn_mfg_to_center",
+      "source": "cn_mfg",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_capacity",
+      "horizons": [
+        "near",
+        "mid",
+        "long"
+      ],
+      "strength": 0.7,
+      "lag": "体量大、弹性稳",
+      "channel": "仍是最大制造地（按生产地口径）"
+    },
+    {
+      "id": "e_liquid_cooling_to_center",
+      "source": "liquid_cooling",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_product",
+      "horizons": [
+        "mid"
+      ],
+      "strength": 0.5,
+      "lag": "随整柜渗透缓升",
+      "channel": "差异化与毛利边际"
+    },
+    {
+      "id": "e_networking_to_center",
+      "source": "networking",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_product",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.65,
+      "lag": "常随机柜同涨",
+      "channel": "算力基建包加深绑定"
+    },
+    {
+      "id": "e_segment_mix_to_center",
+      "source": "segment_mix",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_finance",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.7,
+      "lag": "季报披露",
+      "channel": "AI敞口深度的财报镜像"
+    },
+    {
+      "id": "e_ocf_wc_to_center",
+      "source": "ocf_wc",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_finance",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.6,
+      "lag": "滞后利润",
+      "channel": "增长是否失血"
+    },
+    {
+      "id": "e_customer_conc_to_center",
+      "source": "customer_conc",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_finance",
+      "horizons": [
+        "mid",
+        "long"
+      ],
+      "strength": 0.7,
+      "lag": "年报级",
+      "channel": "议价与订单波动放大器"
+    },
+    {
+      "id": "e_export_control_to_center",
+      "source": "export_control",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_policy",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.2,
+      "lag": "对FII主盘冲击有限",
+      "channel": "伤国内供给生态，非墨越CSP主单"
+    },
+    {
+      "id": "e_geo_reshoring_to_center",
+      "source": "geo_reshoring",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_policy",
+      "horizons": [
+        "mid",
+        "long"
+      ],
+      "strength": 0.45,
+      "lag": "慢变量",
+      "channel": "近岸门槛与成本"
+    },
+    {
+      "id": "e_space_compute_to_center",
+      "source": "space_compute",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_narrative",
+      "horizons": [
+        "long"
+      ],
+      "strength": 0.05,
+      "lag": "近中期可忽略",
+      "channel": "情绪边角，非订单"
+    },
+    {
+      "id": "e_ai_capex_cycle_to_center",
+      "source": "ai_capex_cycle",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_csp",
+      "horizons": [
+        "long"
+      ],
+      "strength": 0.8,
+      "lag": "数年",
+      "channel": "训练狂奔→推理稳态的斜率"
+    },
+    {
+      "id": "e_value_capture_to_center",
+      "source": "value_capture",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_product",
+      "horizons": [
+        "long"
+      ],
+      "strength": 0.5,
+      "lag": "随平台垂直整合缓现",
+      "channel": "系统级锁定上移→代工可吃价值变薄"
+    },
+    {
+      "id": "e_nvda_defines_platform_nvl72",
+      "source": "nvda",
+      "target": "nvl72",
+      "rel": "defines_platform",
+      "note": "整柜参考设计与认证",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_nvda_next_gen_rubin",
+      "source": "nvda",
+      "target": "rubin",
+      "rel": "next_gen",
+      "note": "代际路线图",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_nvl72_requires_liquid_cooling",
+      "source": "nvl72",
+      "target": "liquid_cooling",
+      "rel": "requires",
+      "note": "高功耗整柜驱动液冷",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_nvl72_bundles_with_networking",
+      "source": "nvl72",
+      "target": "networking",
+      "rel": "bundles_with",
+      "note": "机柜间互联常同单",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_csp_capex_pulls_demand_nvl72",
+      "source": "csp_capex",
+      "target": "nvl72",
+      "rel": "pulls_demand",
+      "note": "资本开支→整柜采购",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_csp_capex_prefers_nearshore_mexico",
+      "source": "csp_capex",
+      "target": "mexico",
+      "rel": "prefers_nearshore",
+      "note": "北美交付偏好近岸",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_asic_csp_reshapes_segment_mix",
+      "source": "asic_csp",
+      "target": "segment_mix",
+      "rel": "reshapes",
+      "note": "双轨改变收入叙事结构",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_quanta_competes_on_nvl72",
+      "source": "quanta",
+      "target": "nvl72",
+      "rel": "competes_on",
+      "note": "同代整柜份额",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_export_control_hits_more_a_share_peers",
+      "source": "export_control",
+      "target": "a_share_peers",
+      "rel": "hits_more",
+      "note": "更冲击国内算力生态",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_rubin_may_compress_value_capture",
+      "source": "rubin",
+      "target": "value_capture",
+      "rel": "may_compress",
+      "note": "更深垂直整合",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_ai_capex_cycle_sets_regime_csp_capex",
+      "source": "ai_capex_cycle",
+      "target": "csp_capex",
+      "rel": "sets_regime",
+      "note": "长周期定短中期斜率",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_space_compute_peripheral_to_ai_capex_cycle",
+      "source": "space_compute",
+      "target": "ai_capex_cycle",
+      "rel": "peripheral_to",
+      "note": "远期叙事边角",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_itc_337_to_center",
+      "source": "itc_337",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_policy",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.35,
+      "lag": "立案阶段，结果滞后数季到年",
+      "channel": "Vicor垂直供电专利指控；公司称对当前生产经营无实质影响"
+    },
+    {
+      "id": "e_esop_2026_to_center",
+      "source": "esop_2026",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_finance",
+      "horizons": [
+        "mid"
+      ],
+      "strength": 0.4,
+      "lag": "买入与解锁跨年",
+      "channel": "考核锚定2027–2029累计净利≥2400亿；绑定团队与长期利润预期"
+    },
+    {
+      "id": "e_us_midterms_ai_to_center",
+      "source": "us_midterms_ai",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_narrative",
+      "horizons": [
+        "near",
+        "mid"
+      ],
+      "strength": 0.45,
+      "lag": "情绪快，政策落地慢",
+      "channel": "数据中心建设/德州制造监管预期扰动AI硬件风险偏好"
+    },
+    {
+      "id": "e_nvda_earn_q3fy27_to_center",
+      "source": "nvda_earn_q3fy27",
+      "target": "fii_601138",
+      "rel": "influences",
+      "dimension": "dim_upstream",
+      "horizons": [
+        "near"
+      ],
+      "strength": 0.85,
+      "lag": "财报当日情绪快，机柜量滞后",
+      "channel": "指引/Rubin放量表述→ODM叙事与风险偏好"
+    },
+    {
+      "id": "e_us_midterms_ai_sentiment_on_csp_capex",
+      "source": "us_midterms_ai",
+      "target": "csp_capex",
+      "rel": "sentiment_on",
+      "note": "监管预期扰动CAPEX叙事",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_us_midterms_ai_indirect_mexico",
+      "source": "us_midterms_ai",
+      "target": "mexico",
+      "rel": "indirect",
+      "note": "北美制造布局情绪边角",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_nvda_earn_q3fy27_scheduled_update_nvda",
+      "source": "nvda_earn_q3fy27",
+      "target": "nvda",
+      "rel": "scheduled_update",
+      "note": "财报窗口",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_nvda_earn_q3fy27_may_update_rubin",
+      "source": "nvda_earn_q3fy27",
+      "target": "rubin",
+      "rel": "may_update",
+      "note": "Rubin量产进展表述",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_itc_337_same_dim_export_control",
+      "source": "itc_337",
+      "target": "export_control",
+      "rel": "same_dim",
+      "note": "同属合规/政策维",
+      "horizons": null,
+      "strength": null
+    },
+    {
+      "id": "e_esop_2026_signals_ambition_segment_mix",
+      "source": "esop_2026",
+      "target": "segment_mix",
+      "rel": "signals_ambition",
+      "note": "利润目标隐含成长假设",
+      "horizons": null,
+      "strength": null
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_20261107_seed",
+      "asof": "2026-11-07",
+      "horizon_focus": [
+        "near",
+        "mid",
+        "long"
+      ],
+      "summary": "初始化影响网络：近中远事件与维度雷达结构",
+      "touched_nodes": [
+        "nvda",
+        "nvl72",
+        "rubin",
+        "asic_csp",
+        "csp_capex",
+        "odm_direct",
+        "quanta",
+        "a_share_peers",
+        "mexico",
+        "vietnam",
+        "cn_mfg",
+        "liquid_cooling",
+        "networking",
+        "segment_mix",
+        "ocf_wc",
+        "customer_conc",
+        "export_control",
+        "geo_reshoring",
+        "space_compute",
+        "ai_capex_cycle",
+        "value_capture"
+      ],
+      "source": "demo seed"
+    },
+    {
+      "id": "evt_20261107_week_scan",
+      "asof": "2026-11-07 Asia/Shanghai",
+      "horizon_focus": [
+        "near",
+        "mid"
+      ],
+      "summary": "本周影响扫描入库：股价回撤与美股情绪、OCF/应收讨论、ITC337、ESOP、Rubin/券商、中期选举叙事、TrendForce CAPEX、份额解读；新增节点 itc_337/esop_2026/us_midterms_ai/nvda_earn_q3fy27",
+      "touched_nodes": [
+        "us_midterms_ai",
+        "nvda",
+        "csp_capex",
+        "ocf_wc",
+        "itc_337",
+        "rubin",
+        "nvda_earn_q3fy27",
+        "mexico",
+        "quanta",
+        "nvl72",
+        "asic_csp",
+        "esop_2026",
+        "segment_mix",
+        "liquid_cooling"
+      ],
+      "source": "公开媒体/巨潮相关报道整理 2026-11-07"
+    },
+    {
+      "id": "evt_20261107_week_price_event_note",
+      "asof": "2026-11-07 Asia/Shanghai",
+      "horizon_focus": [
+        "near"
+      ],
+      "summary": "写入首周价事对照 week-2026-11-03：公开归因仅钉 11/6；其余日线标不宜硬归因；确立每周 append-only 周报策略",
+      "touched_nodes": [
+        "us_midterms_ai",
+        "nvda",
+        "csp_capex",
+        "ocf_wc",
+        "itc_337"
+      ],
+      "source": "公开媒体整理（demo）"
+    }
+  ],
+  "radar_index": {
+    "dim_upstream": {
+      "name": "上游与成本",
+      "near": [
+        {
+          "id": "nvda",
+          "name": "英伟达",
+          "strength": 0.9
+        },
+        {
+          "id": "rubin",
+          "name": "Vera Rubin代际",
+          "strength": 0.8
+        },
+        {
+          "id": "nvda_earn_q3fy27",
+          "name": "英伟达FY27Q3财报窗口",
+          "strength": 0.85
+        }
+      ],
+      "mid": [
+        {
+          "id": "nvda",
+          "name": "英伟达",
+          "strength": 0.9
+        },
+        {
+          "id": "rubin",
+          "name": "Vera Rubin代际",
+          "strength": 0.8
+        },
+        {
+          "id": "asic_csp",
+          "name": "CSP自研ASIC",
+          "strength": 0.55
+        }
+      ],
+      "long": [
+        {
+          "id": "asic_csp",
+          "name": "CSP自研ASIC",
+          "strength": 0.55
+        }
+      ]
+    },
+    "dim_csp": {
+      "name": "客户与需求",
+      "near": [
+        {
+          "id": "csp_capex",
+          "name": "北美CSP资本开支",
+          "strength": 0.95
+        }
+      ],
+      "mid": [
+        {
+          "id": "csp_capex",
+          "name": "北美CSP资本开支",
+          "strength": 0.95
+        },
+        {
+          "id": "odm_direct",
+          "name": "ODM Direct",
+          "strength": 0.7
+        }
+      ],
+      "long": [
+        {
+          "id": "ai_capex_cycle",
+          "name": "AI资本开支长周期",
+          "strength": 0.8
+        }
+      ]
+    },
+    "dim_peers": {
+      "name": "同业竞争",
+      "near": [
+        {
+          "id": "quanta",
+          "name": "广达等台系ODM",
+          "strength": 0.75
+        },
+        {
+          "id": "a_share_peers",
+          "name": "A股算力相关",
+          "strength": 0.25
+        }
+      ],
+      "mid": [
+        {
+          "id": "quanta",
+          "name": "广达等台系ODM",
+          "strength": 0.75
+        }
+      ],
+      "long": []
+    },
+    "dim_capacity": {
+      "name": "产能与地理",
+      "near": [
+        {
+          "id": "mexico",
+          "name": "墨西哥近岸",
+          "strength": 0.8
+        },
+        {
+          "id": "vietnam",
+          "name": "越南产能",
+          "strength": 0.55
+        },
+        {
+          "id": "cn_mfg",
+          "name": "中国大陆制造底座",
+          "strength": 0.7
+        }
+      ],
+      "mid": [
+        {
+          "id": "mexico",
+          "name": "墨西哥近岸",
+          "strength": 0.8
+        },
+        {
+          "id": "vietnam",
+          "name": "越南产能",
+          "strength": 0.55
+        },
+        {
+          "id": "cn_mfg",
+          "name": "中国大陆制造底座",
+          "strength": 0.7
+        }
+      ],
+      "long": [
+        {
+          "id": "cn_mfg",
+          "name": "中国大陆制造底座",
+          "strength": 0.7
+        }
+      ]
+    },
+    "dim_product": {
+      "name": "产品与技术",
+      "near": [
+        {
+          "id": "nvl72",
+          "name": "NVL72类整柜",
+          "strength": 0.85
+        },
+        {
+          "id": "networking",
+          "name": "高速交换/NVLink配套",
+          "strength": 0.65
+        }
+      ],
+      "mid": [
+        {
+          "id": "nvl72",
+          "name": "NVL72类整柜",
+          "strength": 0.85
+        },
+        {
+          "id": "liquid_cooling",
+          "name": "液冷与关键件垂直整合",
+          "strength": 0.5
+        },
+        {
+          "id": "networking",
+          "name": "高速交换/NVLink配套",
+          "strength": 0.65
+        }
+      ],
+      "long": [
+        {
+          "id": "value_capture",
+          "name": "ODM价值捕获收缩风险",
+          "strength": 0.5
+        }
+      ]
+    },
+    "dim_finance": {
+      "name": "财务与资本",
+      "near": [
+        {
+          "id": "segment_mix",
+          "name": "云计算收入占比",
+          "strength": 0.7
+        },
+        {
+          "id": "ocf_wc",
+          "name": "经营现金流与营运资本",
+          "strength": 0.6
+        }
+      ],
+      "mid": [
+        {
+          "id": "segment_mix",
+          "name": "云计算收入占比",
+          "strength": 0.7
+        },
+        {
+          "id": "ocf_wc",
+          "name": "经营现金流与营运资本",
+          "strength": 0.6
+        },
+        {
+          "id": "customer_conc",
+          "name": "前五大客户集中度",
+          "strength": 0.7
+        },
+        {
+          "id": "esop_2026",
+          "name": "2026员工持股计划",
+          "strength": 0.4
+        }
+      ],
+      "long": [
+        {
+          "id": "customer_conc",
+          "name": "前五大客户集中度",
+          "strength": 0.7
+        }
+      ]
+    },
+    "dim_policy": {
+      "name": "政策与地缘",
+      "near": [
+        {
+          "id": "export_control",
+          "name": "对华高端GPU限制",
+          "strength": 0.2
+        },
+        {
+          "id": "itc_337",
+          "name": "美国ITC 337调查",
+          "strength": 0.35
+        }
+      ],
+      "mid": [
+        {
+          "id": "export_control",
+          "name": "对华高端GPU限制",
+          "strength": 0.2
+        },
+        {
+          "id": "geo_reshoring",
+          "name": "产能再布局/合规",
+          "strength": 0.45
+        },
+        {
+          "id": "itc_337",
+          "name": "美国ITC 337调查",
+          "strength": 0.35
+        }
+      ],
+      "long": [
+        {
+          "id": "geo_reshoring",
+          "name": "产能再布局/合规",
+          "strength": 0.45
+        }
+      ]
+    },
+    "dim_narrative": {
+      "name": "叙事与预期",
+      "near": [
+        {
+          "id": "us_midterms_ai",
+          "name": "美国中期选举/AI基建监管预期",
+          "strength": 0.45
+        }
+      ],
+      "mid": [
+        {
+          "id": "us_midterms_ai",
+          "name": "美国中期选举/AI基建监管预期",
+          "strength": 0.45
+        }
+      ],
+      "long": [
+        {
+          "id": "space_compute",
+          "name": "太空算力叙事",
+          "strength": 0.05
+        }
+      ]
+    }
+  }
+}

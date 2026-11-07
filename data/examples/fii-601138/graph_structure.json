@@ -1,0 +1,149 @@
+{
+  "net_id": "net_fii_601138",
+  "title": "工业富联影响网络（雷达维 × 近中远）",
+  "purpose": "讨论601138时在本网络上定位变化、扩展节点与关系；中心为公司对象，维度为雷达轴，horizon为时间层。",
+  "asof": "2026-11-07",
+  "timezone": "Asia/Shanghai",
+  "center": {
+    "id": "fii_601138",
+    "type": "Company",
+    "name": "工业富联",
+    "ticker": "601138.SH",
+    "role": "center"
+  },
+  "dimensions": [
+    {
+      "id": "dim_upstream",
+      "name": "上游与成本",
+      "desc": "原材料、关键件、供给与成本传导"
+    },
+    {
+      "id": "dim_csp",
+      "name": "客户与需求",
+      "desc": "下游客户、订单与需求景气"
+    },
+    {
+      "id": "dim_peers",
+      "name": "同业竞争",
+      "desc": "对手份额、报价与替代"
+    },
+    {
+      "id": "dim_capacity",
+      "name": "产能与地理",
+      "desc": "基地、产能、运力与区位"
+    },
+    {
+      "id": "dim_product",
+      "name": "产品与技术",
+      "desc": "产品线、技术路线与工程交付"
+    },
+    {
+      "id": "dim_finance",
+      "name": "财务与资本",
+      "desc": "报表质量、现金流与资本运作"
+    },
+    {
+      "id": "dim_policy",
+      "name": "政策与地缘",
+      "desc": "监管、政策与地缘约束"
+    },
+    {
+      "id": "dim_narrative",
+      "name": "叙事与预期",
+      "desc": "市场叙事、预期与风险偏好"
+    }
+  ],
+  "horizons": {
+    "near": {
+      "name": "近期",
+      "window": "数周–约2个季度"
+    },
+    "mid": {
+      "name": "中期",
+      "window": "约0.5–2年"
+    },
+    "long": {
+      "name": "远期",
+      "window": "数年，弹性大"
+    }
+  },
+  "type_catalog": [
+    {
+      "type": "Company",
+      "desc": "公司主体 / 同业"
+    },
+    {
+      "type": "CSP",
+      "desc": "云厂需求侧主体"
+    },
+    {
+      "type": "ProductPlatform",
+      "desc": "整柜/代际/能力平台"
+    },
+    {
+      "type": "DemandDriver",
+      "desc": "需求驱动"
+    },
+    {
+      "type": "TechTrend",
+      "desc": "结构趋势"
+    },
+    {
+      "type": "BusinessModel",
+      "desc": "商业模式节点"
+    },
+    {
+      "type": "Narrative",
+      "desc": "叙事/情绪/宏观日历"
+    },
+    {
+      "type": "PolicyRisk",
+      "desc": "监管地缘与法律风险"
+    },
+    {
+      "type": "FinanceSignal",
+      "desc": "财务质量信号"
+    },
+    {
+      "type": "Event",
+      "desc": "时点事件"
+    },
+    {
+      "type": "Document",
+      "desc": "证据文档"
+    }
+  ],
+  "type_mapping": {
+    "Company": "Company",
+    "Competitor": "Company",
+    "CompetitorSet": "Company",
+    "Supplier": "Company",
+    "CSP": "CSP",
+    "ProductPlatform": "ProductPlatform",
+    "ProductLine": "ProductPlatform",
+    "Capability": "ProductPlatform",
+    "Capacity": "ProductPlatform",
+    "DemandDriver": "DemandDriver",
+    "TechTrend": "TechTrend",
+    "BusinessModel": "BusinessModel",
+    "Narrative": "Narrative",
+    "MacroCycle": "Narrative",
+    "MacroEvent": "Narrative",
+    "CalendarEvent": "Narrative",
+    "Policy": "PolicyRisk",
+    "PolicyRisk": "PolicyRisk",
+    "LegalRisk": "PolicyRisk",
+    "StructuralRisk": "PolicyRisk",
+    "Governance": "PolicyRisk",
+    "FinancialMetric": "FinanceSignal",
+    "FinanceSignal": "FinanceSignal",
+    "Event": "Event",
+    "Document": "Document"
+  },
+  "layout": {
+    "hints": {}
+  },
+  "schema_version": "influence-net.structure.1",
+  "imported_at": "2026-11-07T20:21:50+08:00",
+  "demo": true
+}

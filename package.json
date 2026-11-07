@@ -1,0 +1,30 @@
+{
+  "name": "influence-net",
+  "description": "影响网 — A-share influence analysis for dsh (local engine + sidebar canvas)",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": {
+      "types": "./src/client/index.ts",
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-sidebar-right"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "test:engine": "cd engine && PYTHONPATH=. python3 -m pytest ../tests/engine -q",
+    "test:plugin": "vitest run",
+    "bundle:client": "node ./scripts/build-client.mjs",
+    "engine": "./engine/run.sh"
+  }
+}
