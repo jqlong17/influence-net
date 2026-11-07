@@ -1,15 +1,27 @@
 # 影响网 / influence-net
 
-![影响网产品截图：对话补节点，右侧关系网](docs/shots/relationship-net.png)
-
-面向 A 股的影响分析 dsh 插件：用自然语言把调研累积进「影响网」（八维雷达 × 近中远），在右侧栏查看关系网与雷达维。
+面向 A 股的影响分析工具：用对话把调研累积进「影响网」，在右侧栏即时看到关系网与八维雷达。
 
 > 非投资建议。仓库内工业富联示例仅供演示。
+
+## 产品效果
+
+**左边对话补充调研，右边关系网即时更新**
+
+![关系网与对话](docs/screenshots/01-relationship-net.png)
+
+**雷达维：八个维度一眼看结构**
+
+![雷达维](docs/screenshots/02-radar-dims.png)
+
+**点开节点看详情与证据**
+
+![节点详情](docs/screenshots/03-node-detail.png)
 
 ## 它做什么
 
 - 本地引擎保存影响网（SQLite，默认 `~/.influence-net/`）
-- dsh 对话里用工具提出 / 确认写入（`influence_net_propose` → `influence_net_apply`）
+- 在 dsh 对话里用工具提出 / 确认写入
 - 右侧栏画布：关系网、雷达维、近中远筛选与节点详情
 
 ## 架构
@@ -41,7 +53,7 @@ cd influence-net
 ### 2. 在 dsh 中加载插件
 
 ```bash
-dsh --patch ./cordis.yml
+dsh --patch /path/to/influence-net/cordis.yml
 ```
 
 若改动了 `src/client/**`，先重建前端包（`DSH_ROOT` 指向 dsh 安装根目录）：
@@ -59,10 +71,6 @@ DSH_ROOT=/path/to/deepseek-harness npm run bundle:client
 ## 示例数据
 
 `data/examples/fii-601138/` — 工业富联演示网，可用 `influence_net_load_example` 重新装入。
-
-## Plugin Hub
-
-仓库已标注 `dsh-plugin` / `deepseek-harness` topic，可在 [DSH Plugin Hub](https://dshpluginhub.ai/plugins) 作为源码条目被发现。一键 `dsh plugin add` 的 npm 包尚在准备中；现阶段请按上方步骤本地挂载。
 
 ## 测试
 
