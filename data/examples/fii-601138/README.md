@@ -1,10 +1,8 @@
 # 示例网：工业富联（601138.SH）
 
-**Demo only / 非投资建议。**
+演示数据，非投资建议。
 
-本目录是「影响网」插件的内置示例，用于首次安装演示：八维雷达壳 + 一组公开可核对倾向的节点与关系。
+- `seed.json` — 可导入的演示种子
+- `graph_structure.json` — 维度与中心结构壳
 
-- `seed.json` — 可导入的演示种子（已脱敏，无本机路径/会话）
-- `graph_structure.json` — 结构壳（与种子一致的维度/中心）
-
-加载方式：启动引擎后调用 `influence_net_load_example`，或引擎首次空库时自动装入本示例。
+启动引擎后调用 `influence_net_load_example`，或在空库首次启动时自动装入。
