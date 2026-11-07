@@ -2,7 +2,7 @@
 
 面向 **A 股** 的影响分析 dsh 插件：用自然语言把调研不断累积进「影响网」（八维雷达 × 近中远），右侧栏看关系网 / 雷达维。
 
-**本仓库与 Influence Lab 无关。** 引擎与 SQLite 都在本项目内；运行时数据落在本机 `~/.influence-net/`。
+引擎与 SQLite 都在本项目内；运行时数据落在本机 `~/.influence-net/`。
 
 > 非投资建议。内置工业富联示例仅为产品演示。
 
@@ -18,12 +18,17 @@ dsh 插件 (src/)  --HTTP-->  本地引擎 (engine/)  --SQLite-->  ~/.influence-
 - 引擎：stdlib Python HTTP（默认 `http://127.0.0.1:18765`）
 - 用户数据：`INFLUENCE_NET_HOME` 可覆盖，默认 `~/.influence-net`
 
+## 前置
+
+需要已安装并可运行的 **dsh**（DeepSeek Harness）。本插件挂在 dsh 会话壳上使用。
+
 ## 快速开始
 
-### 1. 启引擎
+### 1. 克隆并启引擎
 
 ```bash
-cd /Users/ruska/projects/influence-net
+git clone https://github.com/jqlong17/influence-net.git
+cd influence-net
 ./engine/run.sh
 # 或: cd engine && PYTHONPATH=. python3 -m app.server --port 18765
 ```
@@ -33,15 +38,15 @@ cd /Users/ruska/projects/influence-net
 ### 2. 在 dsh 里加载插件
 
 ```bash
-cd /Users/ruska/projects/deepseek-harness
-dsh --patch /Users/ruska/projects/influence-net/cordis.yml
+# 在你的 dsh 安装目录下：
+dsh --patch /绝对路径/influence-net/cordis.yml
 ```
 
-改了 `src/client/**` 后需重建：
+改了 `src/client/**` 后需重建（`DSH_ROOT` 指向你的 dsh 根目录）：
 
 ```bash
-cd /Users/ruska/projects/influence-net
-DSH_ROOT=/Users/ruska/projects/deepseek-harness npm run bundle:client
+cd influence-net
+DSH_ROOT=/path/to/deepseek-harness npm run bundle:client
 ```
 
 ### 3. 使用
@@ -54,19 +59,19 @@ DSH_ROOT=/Users/ruska/projects/deepseek-harness npm run bundle:client
 
 ## 示例网
 
-见 `data/examples/fii-601138/`。标记 `demo: true`，已脱敏（无本机路径/私有会话）。
+见 `data/examples/fii-601138/`。标记 `demo: true`，已脱敏。
 
 ## 测试
 
 ```bash
 # 引擎（stdlib + pytest）
-cd /Users/ruska/projects/influence-net/engine
+cd engine
 PYTHONPATH=. python3 -m pytest ../tests/engine -q
 
 # 插件单测（需能解析 dsh 侧 react；见 vitest.config.ts）
-DSH_ROOT=/Users/ruska/projects/deepseek-harness npx vitest run
+DSH_ROOT=/path/to/deepseek-harness npx vitest run
 ```
 
-## License / 声明
+## License
 
-开源上架前请补全 LICENSE。产品与示例 **不构成投资建议**。
+MIT。产品与示例 **不构成投资建议**。
