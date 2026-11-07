@@ -24,3 +24,9 @@ asof: 2026-11-07 Asia/Shanghai
 
 ## 明确不做（本切片）
 - 不改 Lab 仓行为、不发布到 GitHub/Hub、不做视觉去 AI 味
+
+## 测试（本切片）
+- engine pytest: **5 passed** (`tests/engine`)
+- plugin vitest (logic suite): **27 passed** / 6 files
+- plugin vitest full (tsx/React): not required this slice; needs dsh react aliases + `bundle:client`
+- HTTP smoke: health + abstract graph OK on :random with temp `INFLUENCE_NET_HOME`
