@@ -116,7 +116,7 @@ describe('InfluenceLabBody native canvas (no iframe)', () => {
     await flush()
     const svg = host.querySelector('svg[data-influence-canvas]')
     expect(svg).toBeTruthy()
-    expect(host.querySelector('[data-influence-lab-panel]')).toBeTruthy()
+    expect(host.querySelector('[data-influence-net-panel]')).toBeTruthy()
     expect(host.querySelector('[data-net-picker]')).toBeTruthy()
     expect(host.querySelector('[data-view-tab="relation"]')).toBeTruthy()
     expect(host.querySelector('[data-view-tab="radar"]')).toBeTruthy()

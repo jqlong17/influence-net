@@ -274,25 +274,42 @@ export function InfluenceLabBody(_props: Record<string, unknown> = {}): ReactNod
     [labView, dimension, horizon, mode],
   )
 
-  /** Structure + nets only — graph loads via the filter effect after booted. */
+  /** Structure + nets only — graph loads via the filter effect after booted.
+   * Retries so a just-spawned engine (empty-home → 工业富联 seed) can finish. */
   const bootMeta = useCallback(async () => {
-    try {
-      const struct = (await fetchStructure(ENGINE_BASE)) as StructurePayload
-      setStructure(struct)
-      const netsRes = (await fetchNets(ENGINE_BASE)) as {
-        nets?: NetRow[]
-        active_net_id?: string
+    const attempts = 8
+    let lastErr: unknown = null
+    for (let i = 0; i < attempts; i++) {
+      try {
+        const struct = (await fetchStructure(ENGINE_BASE)) as StructurePayload
+        const netsRes = (await fetchNets(ENGINE_BASE)) as {
+          nets?: NetRow[]
+          active_net_id?: string
+        }
+        const list = netsRes.nets || []
+        // Engine up but seed still writing: wait for at least one net once.
+        if (list.length === 0 && i < attempts - 1) {
+          await new Promise((r) => setTimeout(r, 400))
+          continue
+        }
+        setStructure(struct)
+        setNets(list)
+        setActiveNetId(struct.net_id || netsRes.active_net_id || '')
+        setError(null)
+        setBooted(true)
+        return
+      } catch (err) {
+        lastErr = err
+        if (i < attempts - 1) {
+          await new Promise((r) => setTimeout(r, 400))
+          continue
+        }
       }
-      const list = netsRes.nets || []
-      setNets(list)
-      setActiveNetId(struct.net_id || netsRes.active_net_id || '')
-      setError(null)
-      setBooted(true)
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err)
-      setError(msg)
-      setStatus(`加载失败: ${msg} — 先开影响网引擎 :18765`)
     }
+    const msg = lastErr instanceof Error ? lastErr.message : String(lastErr || 'engine unreachable')
+    setError(msg)
+    setStatus(`加载失败: ${msg} — 插件应会自动拉起引擎；也可手动 ./engine/run.sh`)
+    setBooted(true)
   }, [])
 
   useEffect(() => {

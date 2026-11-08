@@ -45,7 +45,17 @@ flowchart LR
 
 ## 快速开始
 
-### 1. 克隆并启动引擎
+### 1. 安装插件（推荐）
+
+从 [DSH Plugin Hub](https://dshpluginhub.ai/zh/plugins/influence-net) 安装 `influence-net`，或：
+
+```bash
+# 在 dsh web profile 中安装后重启 / 打开会话即可
+```
+
+插件加载时会自动拉起本机 loopback 引擎（默认 `http://127.0.0.1:18765`）。可用 `INFLUENCE_NET_URL` 指定任意本机 HTTP 端口（如 `http://127.0.0.1:29111`），子进程会按同一 host/port 启动；远程 URL 不会自动拉起。**若数据目录还是空的，引擎会自动装入工业富联（601138）示例网**，右侧「标的」下拉里应能看到。也可设 `INFLUENCE_NET_SKIP_AUTOSTART=1` 关闭自动拉起。需要 Python 3 才能 spawn 引擎。
+
+### 2. 开发：克隆并手动启动引擎
 
 ```bash
 git clone https://github.com/jqlong17/influence-net.git
@@ -53,23 +63,26 @@ cd influence-net
 ./engine/run.sh
 ```
 
-首次空库会自动装入工业富联（601138）示例网。
-
-### 2. 在 DeepSeek Harness（dsh）中加载插件
+### 3. 开发：在 DeepSeek Harness（dsh）中加载插件
 
 ```bash
 dsh --patch /path/to/influence-net/cordis.yml
 ```
 
-若改动了 `src/client/**`，先重建前端包（`DSH_ROOT` 指向 DeepSeek Harness 安装根目录）：
+开发构建（本仓库 `devDependencies` 已含 esbuild，无需强依赖 sibling harness）：
 
 ```bash
-DSH_ROOT=/path/to/deepseek-harness npm run bundle:client
+npm install --legacy-peer-deps
+npm run build          # → lib/index.js + lib/client.js
+npm test               # plugin vitest + engine pytest（需 Python3 + pytest）
+npm run accept:pack    # npm pack 解包后真实 apply 冷启动验收（隔离 home/端口）
 ```
+
+若在 DeepSeek Harness monorepo 旁开发，仍可用 `DSH_ROOT=/path/to/deepseek-harness` 复用其 esbuild。
 
 npm 包名：`influence-net`（可在 [DSH Plugin Hub](https://dshpluginhub.ai) 浏览 DeepSeek Harness 插件生态）。
 
-### 3. 使用
+### 4. 使用
 
 1. 打开会话右侧栏 → **影响网**
 2. 切换关系网 / 雷达维，点选节点查看详情
