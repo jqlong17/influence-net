@@ -1,10 +1,16 @@
 // @vitest-environment jsdom
+/**
+ * Client apply contract against the real cordis Context + a host-faithful
+ * sidebarRightTabs registry (register/get/dispose), matching
+ * @deepseek-ai/dsh-client-ui-sidebar-right SidebarRightTabRegistry behaviour
+ * without importing the browser ModuleLoader bundle.
+ */
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Context } from '@deepseek-ai/cordis'
-import { SidebarRightTabRegistry } from '../../packages/client/ui-sidebar-right/src/client/tab-registry.ts'
 import { apply, inject } from '../../src/client/index.ts'
 import { GUIDE_TITLE, PLUGIN_ID, TAB_KIND, VIEW_RADAR, VIEW_RELATION } from '../../src/client/labels.ts'
 import { InfluenceLabBody } from '../../src/client/InfluenceLabBody.tsx'
+import type { InfluenceNetTabDefinition } from '../../src/client/definition.ts'
 
 const contexts: Context[] = []
 
@@ -18,10 +24,47 @@ interface Recorded {
   component: unknown
 }
 
+/**
+ * Minimal SidebarRightTabRegistry stand-in that preserves the host contract used
+ * by plugins: register() returns a disposer, get(kind) returns the in-force
+ * definition, and cordis effect cleanup removes the registration.
+ */
+class SidebarRightTabRegistryStub {
+  private readonly kinds = new Map<string, InfluenceNetTabDefinition>()
+  private readonly ids = new Set<string>()
+
+  constructor(private readonly ctx: Context) {}
+
+  register(definition: InfluenceNetTabDefinition): () => void {
+    const { id, kind } = definition
+    if (this.ids.has(id)) {
+      throw new Error(`sidebarRight: tab type id "${id}" is already registered`)
+    }
+    if (this.kinds.has(kind)) {
+      throw new Error(`sidebarRight: tab kind "${kind}" is already registered`)
+    }
+    const dispose = this.ctx.effect(() => {
+      this.ids.add(id)
+      this.kinds.set(kind, definition)
+      return () => {
+        this.ids.delete(id)
+        this.kinds.delete(kind)
+      }
+    }, `sidebarRight.tabs.register(${JSON.stringify(id)})`)
+    return () => {
+      dispose()
+    }
+  }
+
+  get(kind: string): InfluenceNetTabDefinition | undefined {
+    return this.kinds.get(kind)
+  }
+}
+
 async function boot() {
   const ctx = new Context()
   contexts.push(ctx)
-  const tabs = new SidebarRightTabRegistry(ctx)
+  const tabs = new SidebarRightTabRegistryStub(ctx)
   const registered: Recorded[] = []
   const slots = {
     inject: vi.fn((_name: string, register: () => () => void) => register()),

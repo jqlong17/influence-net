@@ -7,6 +7,7 @@ import {
   ENGINE_PATH_HEALTH,
   ENGINE_PATH_NETS,
 } from './engine-paths.ts'
+import { ensureLocalEngine } from './ensure-engine.ts'
 
 export const name = 'influence-net'
 export const inject = ['tools']
@@ -33,7 +34,7 @@ async function fetchJson(
       status: 0,
       body: {
         error: err instanceof Error ? err.message : String(err),
-        hint: 'Start 影响网 engine on :18765 (engine/run.sh) or set INFLUENCE_NET_URL',
+        hint: 'Start 影响网 engine (./engine/run.sh) or set INFLUENCE_NET_URL to a local http://127.0.0.1:<port>',
       },
     }
   }
@@ -49,6 +50,14 @@ function postJson(path: string, payload: Record<string, unknown>) {
 
 export function apply(ctx: Context) {
   console.log('[influence-net] plugin loaded — 影响网')
+  // Fire-and-await: start bundled engine if needed; empty home → 工业富联 demo.
+  void ensureLocalEngine({ base: ENGINE_BASE }).then((r) => {
+    if (r.ok) {
+      console.log(`[influence-net] engine ${r.status} @ ${r.base}${r.detail ? ` (${r.detail})` : ''}`)
+    } else {
+      console.warn(`[influence-net] engine ensure ${r.status}: ${r.reason}`)
+    }
+  })
 
   ctx.tools.register(
     defineTool({
@@ -69,7 +78,7 @@ export function apply(ctx: Context) {
           engineBase: ENGINE_BASE,
           engineReachable: health.ok,
           engine: health.body,
-          note: 'Writes via MCP. Default write_mode=auto for low-risk narrative upserts; medium/high still need confirm→apply. Never invent strength.',
+          note: 'Plugin auto-starts local engine on load when needed; empty ~/.influence-net seeds 工业富联 demo. Writes via MCP. Never invent strength.',
         }
       },
     }),
@@ -98,7 +107,7 @@ export function apply(ctx: Context) {
             plugin: 'influence-net',
             view,
             error: res.body,
-            tip: 'Engine not reachable; start 影响网 engine on :18765 (./engine/run.sh).',
+            tip: 'Engine not reachable; plugin auto-starts local loopback engines, or run ./engine/run.sh.',
           }
         }
         const body = res.body as { nodes?: unknown[]; edges?: unknown[]; view?: string; net_id?: string }

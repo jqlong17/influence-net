@@ -1,7 +1,7 @@
 {
   "name": "influence-net",
   "description": "影响网 — A-share influence analysis for DeepSeek Harness (dsh): local engine + sidebar canvas",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
@@ -31,11 +31,15 @@
     }
   },
   "scripts": {
+    "build": "npm run bundle:host && npm run bundle:client",
+    "prepack": "npm run build",
+    "test": "npm run test:plugin && npm run test:engine",
     "test:engine": "cd engine && PYTHONPATH=. python3 -m pytest ../tests/engine -q",
     "test:plugin": "vitest run",
     "bundle:client": "node ./scripts/build-client.mjs",
     "engine": "./engine/run.sh",
-    "bundle:host": "node ./scripts/build-host.mjs"
+    "bundle:host": "node ./scripts/build-host.mjs",
+    "accept:pack": "node ./scripts/accept-pack.mjs"
   },
   "license": "MIT",
   "repository": {
@@ -68,5 +72,34 @@
     "README.md",
     "LICENSE",
     "locale"
-  ]
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1",
+    "@deepseek-ai/dsh-client-ui-sidebar-right": "^0.1.5-alpha.1",
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-client-ui-sidebar-right": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.1.0",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "esbuild": "^0.25.0",
+    "jsdom": "^26.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vitest": "^3.0.0"
+  }
 }

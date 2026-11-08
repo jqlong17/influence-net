@@ -3,29 +3,44 @@
  * Externals stay as require() calls answered by the browser module table.
  */
 import { createRequire } from 'node:module'
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { readdirSync } from 'node:fs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const dshRoot = process.env.DSH_ROOT
-  ? process.env.DSH_ROOT
-  : (existsSync(join(root, '../deepseek-harness/package.json'))
-      ? join(root, '../deepseek-harness')
-      : join(root, '..'))
-const pnpm = join(dshRoot, 'node_modules/.pnpm')
+const requireFromRoot = createRequire(join(root, 'package.json'))
 
-function findEsbuild() {
-  for (const name of readdirSync(pnpm)) {
-    if (!name.startsWith('esbuild@')) continue
-    const candidate = join(pnpm, name, 'node_modules/esbuild')
-    if (existsSync(join(candidate, 'package.json'))) return candidate
+function findEsbuildPkg() {
+  try {
+    return dirname(requireFromRoot.resolve('esbuild/package.json'))
+  } catch {
+    /* fall through */
   }
-  throw new Error('esbuild not found under dsh node_modules/.pnpm')
+
+  const dshRoot = process.env.DSH_ROOT
+    ? process.env.DSH_ROOT
+    : (existsSync(join(root, '../deepseek-harness/package.json'))
+        ? join(root, '../deepseek-harness')
+        : null)
+
+  const pnpmRoots = [
+    join(root, 'node_modules/.pnpm'),
+    dshRoot ? join(dshRoot, 'node_modules/.pnpm') : null,
+  ].filter(Boolean)
+
+  for (const pnpm of pnpmRoots) {
+    if (!existsSync(pnpm)) continue
+    const names = readdirSync(pnpm).filter((n) => n.startsWith('esbuild@')).sort().reverse()
+    for (const name of names) {
+      const candidate = join(pnpm, name, 'node_modules/esbuild')
+      if (existsSync(join(candidate, 'package.json'))) return candidate
+    }
+  }
+  throw new Error('esbuild not found; run npm install or set DSH_ROOT')
 }
 
-const require = createRequire(join(findEsbuild(), 'package.json'))
+const esbuildPkg = findEsbuildPkg()
+const require = createRequire(join(esbuildPkg, 'package.json'))
 const esbuild = require('.')
 
 const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'))
@@ -47,6 +62,7 @@ const externals = [
   '@deepseek-ai/dsh-client-ui-dockkit',
 ]
 
+console.log('[bundle:client] using', esbuildPkg)
 const result = await esbuild.build({
   absWorkingDir: root,
   entryPoints: [join(root, 'src/client/index.ts')],

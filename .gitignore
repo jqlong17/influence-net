@@ -11,3 +11,5 @@ __pycache__/
 *.sqlite-shm
 .influence-net-home/
 .npmrc.publish
+artifacts/
+*.tgz
