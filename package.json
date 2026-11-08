@@ -1,11 +1,14 @@
 {
   "name": "influence-net",
   "description": "影响网 — A-share influence analysis for DeepSeek Harness (dsh): local engine + sidebar canvas",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
-  "main": "./src/index.ts",
+  "main": "./lib/index.js",
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./lib/index.js"
+    },
     "./client": {
       "types": "./src/client/index.ts",
       "default": "./lib/client.js"
@@ -31,7 +34,8 @@
     "test:engine": "cd engine && PYTHONPATH=. python3 -m pytest ../tests/engine -q",
     "test:plugin": "vitest run",
     "bundle:client": "node ./scripts/build-client.mjs",
-    "engine": "./engine/run.sh"
+    "engine": "./engine/run.sh",
+    "bundle:host": "node ./scripts/build-host.mjs"
   },
   "license": "MIT",
   "repository": {
